@@ -1,0 +1,15 @@
+# Get all transactions
+http://localhost:5000/api/v1/transactions
+
+###
+# Add transactions
+POST http://localhost:5000/api/v1/transactions
+content-type: application/json
+
+{
+    "text": "random",
+    "amount": 200
+}
+###
+# delete transactions
+DELETE http://localhost:5000/api/v1/transactions/123
