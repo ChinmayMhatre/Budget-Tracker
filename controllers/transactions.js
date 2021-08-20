@@ -31,10 +31,20 @@ exports.addTransactions = async (req,res,next) =>{
             data:transaction
         })
     } catch (error) {
-        return res.status(500).json({
-            success:false,
-            error:"add failed"
-        })
+        if(error.name === "ValidationError"){
+        const messages = Object.values(error.errors).map(val =>val.message);
+        
+            return res.status(400).json({
+                success:false,
+                error:messages
+            })
+        }else{
+            return res.status(500).json({
+                success:false,
+                error:"add failed"
+            })
+        }
+
     }
 }
 
@@ -43,7 +53,30 @@ exports.addTransactions = async (req,res,next) =>{
 //* @route DELETE /api/v1/transactions
 //* @access public 
 exports.deleteTransactions = async (req,res,next) =>{
-    res.send("Delete transactions")
+
+    try {
+        const transaction = Transaction.findById(req.params.id)
+
+        if(!transaction){
+            return res.status(404).json({
+                success:false,
+                error:"Transaction not found"
+            })
+        }
+    
+        await transaction.remove()
+    
+        res.status(200).json({
+            success:true,
+            data:{}
+        })    
+    } catch (error) {
+        return res.status(500).json({
+            success:false,
+            error:"remove failed"
+        })
+    }
+    
 }
 
 

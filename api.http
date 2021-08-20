@@ -7,9 +7,9 @@ POST http://localhost:5000/api/v1/transactions
 content-type: application/json
 
 {
-    "text": "random",
-    "amount": 200
+    "text": "random 2",
+    "amount": 600
 }
 ###
 # delete transactions
-DELETE http://localhost:5000/api/v1/transactions/123
+DELETE http://localhost:5000/api/v1/transactions/
